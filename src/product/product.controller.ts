@@ -84,8 +84,8 @@ export class ProductController {
     return await this.productService.findOne(id);
   }
 
-  @Get('search')
-  @ApiQuery({
+  @Get('search/:itemName')
+  @ApiParam({
     name: 'itemName',
     required: true,
     description: 'The name of the item to search for',
@@ -101,8 +101,7 @@ export class ProductController {
     type: [Product],
   })
   @UseGuards(JwtAuthGuard)
-  async search(@Query('itemName') itemName: string): Promise<Product[]> {
-    console.log('itemName', itemName);
+  async search(@Param('itemName') itemName: string): Promise<Product[]> {
     return await this.productService.search(itemName);
   }
 

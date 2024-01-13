@@ -56,8 +56,6 @@ export class ProductService {
 
   async search(itemName: string): Promise<Product[]> {
     try {
-      console.log(itemName);
-
       return await this.productRepository.find({
         where: { itemName: Like(`%${itemName}%`) },
       });
