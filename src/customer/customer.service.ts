@@ -41,7 +41,7 @@ export class CustomerService {
     try {
       const customer = await this.customerRepository.findOne({ where: { id } });
       if (!customer) {
-        throw new Error(`Customer with ID #${id} not found`);
+        throw new Error(`Customer with ID ${id} not found`);
       }
       return customer;
     } catch (error) {
@@ -55,6 +55,7 @@ export class CustomerService {
     user: any,
   ): Promise<Customer> {
     try {
+      await this.findOne(id);
       const customer = await this.customerRepository.preload({
         id,
         ...updateCustomerDto,
@@ -71,12 +72,11 @@ export class CustomerService {
     }
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: string): Promise<any> {
     try {
-      const result = await this.customerRepository.delete(id);
-      if (result.affected === 0) {
-        throw new Error(`Customer with ID #${id} not found`);
-      }
+      await this.findOne(id);
+      await this.customerRepository.delete(id);
+      return 'Customer deleted successfully';
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
