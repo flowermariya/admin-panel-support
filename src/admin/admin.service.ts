@@ -65,7 +65,11 @@ export class AdminService {
     }
   }
 
-  async update(id: string, updateAdminDto: UpdateAdminDto): Promise<Admin> {
+  async update(
+    id: string,
+    updateAdminDto: UpdateAdminDto,
+    user: any,
+  ): Promise<Admin> {
     try {
       const admin = await this.findOne(id);
       if (!admin) {
