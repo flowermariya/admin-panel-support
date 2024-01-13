@@ -18,8 +18,6 @@ export class AuthService {
   constructor(
     @InjectRepository(Auth)
     private readonly authRepository: Repository<Auth>,
-    @InjectRepository(Admin)
-    private readonly adminRepository: Repository<Admin>,
   ) {}
 
   async login(createAuthDto: LoginDto): Promise<Admin> {

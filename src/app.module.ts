@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AdminModule } from './admin/admin.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { ProductModule } from './product/product.module';
 import config from './ormconfig';
 import * as OrmConfig from './ormconfig';
 
@@ -21,6 +22,7 @@ console.log(config);
       synchronize: true,
     }),
     AuthModule,
+    ProductModule,
   ],
 })
 export class AppModule {}

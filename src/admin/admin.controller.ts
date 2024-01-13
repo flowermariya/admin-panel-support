@@ -78,6 +78,7 @@ export class AdminController {
   @ApiResponse({
     status: 200,
     description: 'Admin has been successfully deleted',
+    type: String,
   })
   async remove(@Param('id') id: string) {
     return await this.adminService.remove(id);
