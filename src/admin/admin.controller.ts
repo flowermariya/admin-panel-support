@@ -90,6 +90,7 @@ export class AdminController {
   @ApiResponse({
     status: 200,
     description: 'Admin has been successfully deleted',
+    type: String,
   })
   @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string) {
