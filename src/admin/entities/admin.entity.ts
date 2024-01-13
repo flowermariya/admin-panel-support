@@ -20,7 +20,7 @@ export class Admin extends BaseEntityModel {
   @Column({
     type: 'enum',
     enum: Gender,
-    default: Gender.Other,
+    default: Gender.OTHER,
   })
   gender: Gender;
 
@@ -32,8 +32,4 @@ export class Admin extends BaseEntityModel {
 
   @Column()
   role: string;
-
-  // @OneToOne(() => Auth, (auth) => auth.admin)
-  // @JoinColumn()
-  // auth: Auth;
 }

@@ -28,7 +28,7 @@ export class UpdateAdminDto {
   @ApiPropertyOptional({
     description: 'The gender of the admin.',
     enum: Gender,
-    default: Gender.Other,
+    default: Gender.OTHER,
   })
   @IsOptional()
   @IsEnum(Gender)
