@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AdminModule } from './admin/admin.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 import config from './ormconfig';
 import * as OrmConfig from './ormconfig';
 
@@ -19,6 +20,7 @@ console.log(config);
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    AuthModule,
   ],
 })
 export class AppModule {}

@@ -50,6 +50,16 @@ export class CreateAdminDto {
   @MaxLength(100)
   email: string;
 
+  @ApiProperty({
+    description: 'The password of the admin.',
+    maxLength: 100,
+  })
+  @IsNotEmpty()
+  @IsEmail()
+  @MinLength(6)
+  @MaxLength(100)
+  password: string;
+
   @ApiPropertyOptional({
     description: 'The role of the admin.',
     maxLength: 50,

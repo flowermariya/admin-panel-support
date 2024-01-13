@@ -43,15 +43,6 @@ export class UpdateAdminDto {
   @MaxLength(10)
   phone: number;
 
-  @ApiProperty({
-    description: 'The email address of the admin.',
-    maxLength: 100,
-  })
-  @IsNotEmpty()
-  @IsEmail()
-  @MaxLength(100)
-  email: string;
-
   @ApiPropertyOptional({
     description: 'The role of the admin.',
     maxLength: 50,

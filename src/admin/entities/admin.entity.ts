@@ -1,6 +1,13 @@
+import { Auth } from 'src/auth/entities/auth.entity';
 import { BaseEntityModel } from 'src/base.schema';
 import { Gender } from 'src/enums/gender';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity()
 export class Admin extends BaseEntityModel {
@@ -25,4 +32,8 @@ export class Admin extends BaseEntityModel {
 
   @Column()
   role: string;
+
+  // @OneToOne(() => Auth, (auth) => auth.admin)
+  // @JoinColumn()
+  // auth: Auth;
 }
