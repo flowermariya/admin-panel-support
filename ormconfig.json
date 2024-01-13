@@ -1,0 +1,10 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3307,
+  "username": "admin",
+  "password": "adminpass",
+  "database": "admin-panel",
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "synchronize": true
+}
