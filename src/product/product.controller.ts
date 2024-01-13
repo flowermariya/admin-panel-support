@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -16,6 +17,7 @@ import {
   ApiResponse,
   ApiBody,
   ApiParam,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { Product } from './entities/product.entity';
 
@@ -57,6 +59,22 @@ export class ProductController {
   @ApiParam({ name: 'id', type: String })
   findOne(@Param('id') id: string) {
     return this.productService.findOne(id);
+  }
+
+  @Get('search')
+  @ApiQuery({
+    name: 'itemName',
+    required: true,
+    description: 'The name of the item to search for',
+  })
+  @ApiOperation({ summary: 'Search for products by item name' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of products matching the item name',
+    type: [Product],
+  })
+  search(@Query('itemName') itemName: string) {
+    return this.productService.searchByItemName(itemName);
   }
 
   @Patch(':id')
