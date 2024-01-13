@@ -1,5 +1,5 @@
 import { Auth } from 'src/auth/entities/auth.entity';
-import { BaseEntityModel } from 'src/base.schema';
+import { BaseEntityModel } from 'src/utils/base.schema';
 import { Gender } from 'src/enums/gender';
 import {
   Entity,
@@ -27,9 +27,9 @@ export class Admin extends BaseEntityModel {
   @Column()
   phone: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   role: string;
 }

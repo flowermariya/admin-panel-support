@@ -16,6 +16,7 @@ export class CreateAdminDto {
     description: 'The name of the admin.',
     minLength: 3,
     maxLength: 100,
+    default: '',
   })
   @IsNotEmpty()
   @IsString()
@@ -35,15 +36,16 @@ export class CreateAdminDto {
   @ApiProperty({
     description: 'The phone number of the admin.',
     maxLength: 15,
+    default: 123,
   })
   @IsNotEmpty()
   @IsNumber()
-  @MaxLength(10)
   phone: number;
 
   @ApiProperty({
     description: 'The email address of the admin.',
-    maxLength: 100,
+    maxLength: 10,
+    default: '',
   })
   @IsNotEmpty()
   @IsEmail()
@@ -53,9 +55,9 @@ export class CreateAdminDto {
   @ApiProperty({
     description: 'The password of the admin.',
     maxLength: 100,
+    default: '',
   })
   @IsNotEmpty()
-  @IsEmail()
   @MinLength(6)
   @MaxLength(100)
   password: string;
@@ -63,8 +65,9 @@ export class CreateAdminDto {
   @ApiPropertyOptional({
     description: 'The role of the admin.',
     maxLength: 50,
+    default: '',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MaxLength(50)
   role: string;

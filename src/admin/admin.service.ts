@@ -23,14 +23,14 @@ export class AdminService {
 
   async create(createAdminDto: CreateAdminDto): Promise<Admin> {
     try {
+      const admin = await this.adminRepository.create(createAdminDto);
+
+      await this.adminRepository.save(admin);
+
       const hashedPassword = await bcrypt.hashSync(
         createAdminDto?.password,
         10,
       );
-
-      const admin = await this.adminRepository.create(createAdminDto);
-
-      await this.adminRepository.save(admin);
 
       const auth = await this.authRepository.create({
         username: createAdminDto?.email,
@@ -41,6 +41,9 @@ export class AdminService {
       await this.authRepository.save(auth);
       return admin;
     } catch (error) {
+      if (error.code === 1062) {
+        throw 'EmailId already exists';
+      }
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
@@ -57,7 +60,7 @@ export class AdminService {
     try {
       const admin = await this.adminRepository.findOne({ where: { id } });
       if (!admin) {
-        throw new NotFoundException(`Admin User with ID #${id} not found`);
+        throw new NotFoundException(`Admin User with ID ${id} not found`);
       }
       return admin;
     } catch (error) {
@@ -75,6 +78,13 @@ export class AdminService {
       if (!admin) {
         throw new NotFoundException(`Admin User with ID #${id} not found`);
       }
+
+      if (user?.email != admin.email) {
+        throw new HttpException(
+          'You are not authorized to perform this action, since you are not the owner of this account',
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
       admin.name = updateAdminDto?.name;
       admin.gender = updateAdminDto?.gender;
       admin.phone = updateAdminDto?.phone;
@@ -85,9 +95,17 @@ export class AdminService {
     }
   }
 
-  async remove(id: string): Promise<any> {
+  async remove(id: string, user: any): Promise<any> {
     try {
-      await this.findOne(id);
+      const admin = await this.findOne(id);
+
+      if (user?.email != admin.email) {
+        throw new HttpException(
+          'You are not authorized to perform this action, since you are not the owner of this account',
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
+      await this.authRepository.delete({ admin: admin });
       await this.adminRepository.delete(id);
       return 'Successfully removed user';
     } catch (error) {
