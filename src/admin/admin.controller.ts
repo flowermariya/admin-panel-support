@@ -6,11 +6,14 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -18,9 +21,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Admin } from './entities/admin.entity';
+import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { Request } from 'express';
 
 @ApiTags('Admin')
 @Controller('admin')
+@ApiBearerAuth('JWT-auth')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
@@ -40,6 +46,7 @@ export class AdminController {
   @Get()
   @ApiOperation({ summary: 'Get all admin' })
   @ApiResponse({ status: 200, description: 'Return all admin', type: [Admin] })
+  @UseGuards(JwtAuthGuard)
   async findAll(): Promise<Admin[]> {
     return await this.adminService.findAll();
   }
@@ -52,6 +59,7 @@ export class AdminController {
     description: 'Return the admin by ID',
     type: Admin,
   })
+  @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string): Promise<Admin> {
     return await this.adminService.findOne(id);
   }
@@ -65,10 +73,14 @@ export class AdminController {
     description: 'Admin has been successfully updated',
     type: Admin,
   })
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
+    @Req() req: Request,
     @Body() updateAdminDto: UpdateAdminDto,
   ) {
+    // const user = req.user;
+
     return await this.adminService.update(id, updateAdminDto);
   }
 
@@ -80,6 +92,7 @@ export class AdminController {
     description: 'Admin has been successfully deleted',
     type: String,
   })
+  @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string) {
     return await this.adminService.remove(id);
   }
