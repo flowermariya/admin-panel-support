@@ -4,8 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { CustomerModule } from './customer/customer.module';
-import config from './ormconfig';
-import * as OrmConfig from './ormconfig';
+import config from './product/ormconfig';
+import * as OrmConfig from './product/ormconfig';
 
 console.log(config);
 

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
-import { BaseEntityModel } from 'src/base.schema';
+import { BaseEntityModel } from 'src/utils/base.schema';
 
 export class LoginDto extends BaseEntityModel {
   @ApiProperty({
@@ -13,11 +13,10 @@ export class LoginDto extends BaseEntityModel {
   username: string;
 
   @ApiProperty({
-    description: 'The email address of the admin.',
+    description: 'The password of the admin.',
     maxLength: 100,
   })
   @IsNotEmpty()
-  @IsEmail()
   @MinLength(6)
   @MaxLength(100)
   password: string;

@@ -34,8 +34,6 @@ export class AuthService {
         relations: ['admin'],
       });
 
-      console.log();
-
       if (auth && bcrypt.compareSync(password, auth.password)) {
         const user = {
           username: auth?.username,

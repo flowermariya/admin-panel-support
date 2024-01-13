@@ -1,5 +1,5 @@
 import { Admin } from 'src/admin/entities/admin.entity';
-import { BaseEntityModel } from 'src/base.schema';
+import { BaseEntityModel } from 'src/utils/base.schema';
 import {
   Entity,
   Column,

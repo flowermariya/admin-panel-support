@@ -30,22 +30,13 @@ import { Request } from 'express';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  @Post()
-  @ApiOperation({ summary: 'Create a new admin' })
-  @ApiResponse({
-    status: 201,
-    description: 'The admin has been successfully created.',
-    type: Admin,
-  })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
-  @ApiBody({ type: CreateAdminDto })
-  async create(@Body() createAdminDto: CreateAdminDto): Promise<Admin> {
-    return await this.adminService.create(createAdminDto);
-  }
-
   @Get()
-  @ApiOperation({ summary: 'Get all admin' })
-  @ApiResponse({ status: 200, description: 'Return all admin', type: [Admin] })
+  @ApiOperation({ summary: 'Get all admin users' })
+  @ApiResponse({
+    status: 200,
+    description: 'Return all admin users',
+    type: [Admin],
+  })
   @UseGuards(JwtAuthGuard)
   async findAll(): Promise<Admin[]> {
     return await this.adminService.findAll();
@@ -91,7 +82,7 @@ export class AdminController {
     type: String,
   })
   @UseGuards(JwtAuthGuard)
-  async remove(@Param('id') id: string) {
-    return await this.adminService.remove(id);
+  async remove(@Param('id') id: string, @Req() req: any) {
+    return await this.adminService.remove(id, req?.user);
   }
 }

@@ -14,12 +14,13 @@ import {
 import { Gender } from 'src/enums/gender';
 
 export class UpdateAdminDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'The name of the admin.',
     minLength: 3,
     maxLength: 100,
+    default: '',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MinLength(3)
   @MaxLength(100)
@@ -34,13 +35,13 @@ export class UpdateAdminDto {
   @IsEnum(Gender)
   gender: Gender;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'The phone number of the admin.',
     maxLength: 15,
+    default: 123,
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
-  @MaxLength(10)
   phone: number;
 
   @ApiPropertyOptional({
