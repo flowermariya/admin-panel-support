@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  Column,
 } from 'typeorm';
 
 export abstract class BaseEntityModel extends BaseEntity {
@@ -18,4 +19,7 @@ export abstract class BaseEntityModel extends BaseEntity {
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
   updatedAt: Date;
+
+  @Column({ nullable: true })
+  createdBy: string;
 }

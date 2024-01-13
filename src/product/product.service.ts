@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like } from 'typeorm';
 import { Product } from './entities/product.entity';
@@ -12,10 +17,18 @@ export class ProductService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  async create(createProductDto: CreateProductDto): Promise<Product> {
+  async create(
+    createProductDto: CreateProductDto,
+    user: any,
+  ): Promise<Product> {
     try {
-      const newProduct = this.productRepository.create(createProductDto);
-      return this.productRepository.save(newProduct);
+      console.log(user);
+
+      const newProduct = await this.productRepository.create({
+        ...createProductDto,
+        createdBy: user?.id,
+      });
+      return await this.productRepository.save(newProduct);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
@@ -41,8 +54,10 @@ export class ProductService {
     }
   }
 
-  async searchByItemName(itemName: string): Promise<Product[]> {
+  async search(itemName: string): Promise<Product[]> {
     try {
+      console.log(itemName);
+
       return await this.productRepository.find({
         where: { itemName: Like(`%${itemName}%`) },
       });
@@ -54,8 +69,17 @@ export class ProductService {
   async update(
     id: string,
     updateProductDto: UpdateProductDto,
+    user: any,
   ): Promise<Product> {
     try {
+      const item = await this.findOne(id);
+
+      if (user?.id != item?.createdBy) {
+        throw new UnauthorizedException(
+          `You are not authorized to update this product, since you are not the creator of this product`,
+        );
+      }
+
       const product = await this.productRepository.preload({
         id,
         ...updateProductDto,
@@ -70,12 +94,18 @@ export class ProductService {
     }
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string, user: any): Promise<any> {
     try {
-      const result = await this.productRepository.delete(id);
-      if (result.affected === 0) {
-        throw new Error(`Product ${id} not found`);
+      const product = await this.findOne(id);
+
+      if (user?.id != product?.createdBy) {
+        throw new UnauthorizedException(
+          `You are not authorized to delete this product, since you are not the creator of this product`,
+        );
       }
+
+      await this.productRepository.delete(id);
+      return 'Product deleted successfully';
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }

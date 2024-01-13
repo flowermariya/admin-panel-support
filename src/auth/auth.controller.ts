@@ -15,6 +15,15 @@ export class AuthController {
     private readonly adminService: AdminService,
   ) {}
 
+  @Post()
+  @ApiOperation({ summary: 'Admin login' })
+  @ApiResponse({ status: 200, description: 'Login successful', type: Auth })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiBody({ type: LoginDto })
+  async login(@Body() loginDto: LoginDto): Promise<Admin> {
+    return await this.authService.login(loginDto);
+  }
+
   @Post('create')
   @ApiOperation({ summary: 'Create admin user' })
   @ApiResponse({
@@ -29,14 +38,5 @@ export class AuthController {
   @ApiBody({ type: CreateAdminDto })
   async create(@Body() createAdminDto: CreateAdminDto): Promise<Admin> {
     return await this.adminService.create(createAdminDto);
-  }
-
-  @Post()
-  @ApiOperation({ summary: 'Admin login' })
-  @ApiResponse({ status: 200, description: 'Login successful', type: Auth })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiBody({ type: LoginDto })
-  async login(@Body() loginDto: LoginDto): Promise<Admin> {
-    return await this.authService.login(loginDto);
   }
 }

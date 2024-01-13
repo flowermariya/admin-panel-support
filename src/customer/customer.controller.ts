@@ -19,10 +19,12 @@ import {
   ApiParam,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { Customer } from './entities/customer.entity';
 
 @ApiTags('customer')
+@ApiBearerAuth('JWT-auth')
 @Controller('customer')
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}

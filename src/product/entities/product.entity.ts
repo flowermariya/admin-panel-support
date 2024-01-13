@@ -1,8 +1,9 @@
+import { BaseEntityModel } from 'src/utils/base.schema';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class Product {
-  @PrimaryGeneratedColumn()
+export class Product extends BaseEntityModel {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
@@ -20,7 +21,7 @@ export class Product {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   unitPrice: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   mrp: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
@@ -35,6 +36,6 @@ export class Product {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255 })
   staff: string;
 }
