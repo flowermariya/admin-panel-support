@@ -9,6 +9,15 @@ async function bootstrap() {
     .setTitle('Admin Support Panel')
     .setDescription('Your API Description')
     .addTag('Admin')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        in: 'header',
+      },
+      'JWT-auth',
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

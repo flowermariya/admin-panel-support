@@ -12,6 +12,8 @@ import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Admin } from 'src/admin/entities/admin.entity';
+import * as jwt from 'jsonwebtoken';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -20,9 +22,10 @@ export class AuthService {
     private readonly authRepository: Repository<Auth>,
     @InjectRepository(Admin)
     private readonly adminRepository: Repository<Admin>,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async login(createAuthDto: LoginDto): Promise<Admin> {
+  async login(createAuthDto: LoginDto): Promise<any> {
     try {
       const { username, password } = createAuthDto;
 
@@ -31,8 +34,18 @@ export class AuthService {
         relations: ['admin'],
       });
 
+      console.log();
+
       if (auth && bcrypt.compareSync(password, auth.password)) {
-        return auth.admin;
+        const user = {
+          username: auth?.username,
+          email: auth.admin.email,
+          name: auth.admin.name,
+          sub: auth?.admin?.id,
+        };
+        return {
+          access_token: this.jwtService.sign(user),
+        };
       } else {
         throw new UnauthorizedException('Invalid credentials');
       }
