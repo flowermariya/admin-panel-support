@@ -1,35 +1,50 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEnum,
   IsOptional,
   IsString,
   IsBoolean,
   IsDate,
+  IsNotEmpty,
+  MinLength,
+  IsNumber,
+  MaxLength,
 } from 'class-validator';
 import { TransactionMode } from 'src/enums/transaction.mode';
 
 export class CreateCustomerDto {
+  @ApiProperty({ default: '' })
   @IsString()
+  @IsNotEmpty()
+  @MinLength(3)
   customerName: string;
 
-  @IsOptional()
-  @IsString()
-  phoneNumber?: string;
+  @ApiProperty({ maxLength: 15, default: 123 })
+  @IsNotEmpty()
+  @IsNumber()
+  phoneNumber?: number;
 
+  @ApiPropertyOptional({ default: '' })
   @IsOptional()
+  @MinLength(10)
+  @MaxLength(100)
   @IsString()
   address?: string;
 
-  @IsOptional()
+  @ApiProperty({ default: '' })
+  @IsNotEmpty()
+  @MinLength(10)
+  @MaxLength(100)
   @IsString()
   deliveryAddress?: string;
 
-  @IsOptional()
-  @IsDate()
-  date?: Date;
-
+  @ApiProperty({ default: TransactionMode.CASH, enum: TransactionMode })
+  @IsNotEmpty()
   @IsEnum(TransactionMode)
-  transactionMode: TransactionMode;
+  Mode: TransactionMode;
 
+  @ApiProperty({ default: false })
+  @IsNotEmpty()
   @IsBoolean()
   isIGST: boolean;
 }

@@ -12,18 +12,26 @@ export class CustomerService {
     private readonly customerRepository: Repository<Customer>,
   ) {}
 
-  async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+  async create(
+    createCustomerDto: CreateCustomerDto,
+    user: any,
+  ): Promise<Customer> {
     try {
-      const newCustomer = this.customerRepository.create(createCustomerDto);
+      const newCustomer = this.customerRepository.create({
+        ...createCustomerDto,
+        createdBy: user?.id,
+      });
       return await this.customerRepository.save(newCustomer);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
-  async findAll(): Promise<Customer[]> {
+  async findAll(user: any): Promise<Customer[]> {
     try {
-      return await this.customerRepository.find();
+      return await this.customerRepository.find({
+        where: { createdBy: user?.id },
+      });
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
@@ -33,7 +41,7 @@ export class CustomerService {
     try {
       const customer = await this.customerRepository.findOne({ where: { id } });
       if (!customer) {
-        throw new Error(`Customer with ID #${id} not found`);
+        throw new Error(`Customer with ID ${id} not found`);
       }
       return customer;
     } catch (error) {
@@ -44,11 +52,14 @@ export class CustomerService {
   async update(
     id: string,
     updateCustomerDto: UpdateCustomerDto,
+    user: any,
   ): Promise<Customer> {
     try {
+      await this.findOne(id);
       const customer = await this.customerRepository.preload({
         id,
         ...updateCustomerDto,
+        updatedBy: user?.id,
       });
 
       if (!customer) {
@@ -61,12 +72,11 @@ export class CustomerService {
     }
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: string): Promise<any> {
     try {
-      const result = await this.customerRepository.delete(id);
-      if (result.affected === 0) {
-        throw new Error(`Customer with ID #${id} not found`);
-      }
+      await this.findOne(id);
+      await this.customerRepository.delete(id);
+      return 'Customer deleted successfully';
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
