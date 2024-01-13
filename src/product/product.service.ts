@@ -34,9 +34,9 @@ export class ProductService {
     }
   }
 
-  async findAll(): Promise<Product[]> {
+  async findAll(user: any): Promise<Product[]> {
     try {
-      return this.productRepository.find();
+      return this.productRepository.find({ where: { createdBy: user?.id } });
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
@@ -70,17 +70,11 @@ export class ProductService {
     user: any,
   ): Promise<Product> {
     try {
-      const item = await this.findOne(id);
-
-      if (user?.id != item?.createdBy) {
-        throw new UnauthorizedException(
-          `You are not authorized to update this product, since you are not the creator of this product`,
-        );
-      }
-
+      await this.findOne(id);
       const product = await this.productRepository.preload({
         id,
         ...updateProductDto,
+        updatedBy: user?.id, // Any one can may or may not update products since these are admin products, so tracking the updated user
       });
 
       if (!product) {
@@ -94,14 +88,7 @@ export class ProductService {
 
   async remove(id: string, user: any): Promise<any> {
     try {
-      const product = await this.findOne(id);
-
-      if (user?.id != product?.createdBy) {
-        throw new UnauthorizedException(
-          `You are not authorized to delete this product, since you are not the creator of this product`,
-        );
-      }
-
+      await this.findOne(id);
       await this.productRepository.delete(id);
       return 'Product deleted successfully';
     } catch (error) {

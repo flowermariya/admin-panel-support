@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -22,8 +24,9 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { Customer } from './entities/customer.entity';
+import { JwtAuthGuard } from 'src/auth/jwt.guard';
 
-@ApiTags('customer')
+@ApiTags('Customer')
 @ApiBearerAuth('JWT-auth')
 @Controller('customer')
 export class CustomerController {
@@ -35,11 +38,17 @@ export class CustomerController {
     description: 'The customer has been successfully created.',
     type: CreateCustomerDto,
   })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
   @ApiBody({ type: CreateCustomerDto })
+  @UseGuards(JwtAuthGuard)
   async create(
     @Body() createCustomerDto: CreateCustomerDto,
+    @Req() req: any,
   ): Promise<Customer> {
-    return await this.customerService.create(createCustomerDto);
+    return await this.customerService.create(createCustomerDto, req?.user);
   }
 
   @Get()
@@ -49,8 +58,12 @@ export class CustomerController {
     description: 'List of all customers',
     type: [CreateCustomerDto],
   })
-  async findAll() {
-    return await this.customerService.findAll();
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
+  async findAll(@Req() req: any) {
+    return await this.customerService.findAll(req?.user);
   }
 
   @Get(':id')
@@ -59,6 +72,10 @@ export class CustomerController {
     status: 200,
     description: 'The customer details',
     type: CreateCustomerDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
   })
   @ApiNotFoundResponse({ description: 'Customer not found' })
   @ApiParam({ name: 'id', description: 'The customer ID' })
@@ -72,14 +89,19 @@ export class CustomerController {
     description: 'The customer has been successfully updated',
     type: UpdateCustomerDto,
   })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
   @ApiNotFoundResponse({ description: 'Customer not found' })
   @ApiParam({ name: 'id', description: 'The customer ID' })
   @ApiBody({ type: UpdateCustomerDto })
   async update(
     @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
+    @Req() req: any,
   ) {
-    return await this.customerService.update(id, updateCustomerDto);
+    return await this.customerService.update(id, updateCustomerDto, req?.user);
   }
 
   @Delete(':id')
@@ -87,7 +109,11 @@ export class CustomerController {
   @ApiOkResponse({ description: 'The customer has been successfully deleted' })
   @ApiNotFoundResponse({ description: 'Customer not found' })
   @ApiParam({ name: 'id', description: 'The customer ID' })
-  async remove(@Param('id') id: string) {
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
+  async remove(@Param('id') id: string, @Req() req: any) {
     return await this.customerService.remove(id);
   }
 }

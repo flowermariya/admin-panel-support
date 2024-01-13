@@ -37,6 +37,10 @@ export class AdminController {
     description: 'Return all admin users',
     type: [Admin],
   })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
   @UseGuards(JwtAuthGuard)
   async findAll(): Promise<Admin[]> {
     return await this.adminService.findAll();
@@ -49,6 +53,10 @@ export class AdminController {
     status: 200,
     description: 'Return the admin by ID',
     type: Admin,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
   })
   @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string): Promise<Admin> {
@@ -63,6 +71,10 @@ export class AdminController {
     status: 200,
     description: 'Admin has been successfully updated',
     type: Admin,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
   })
   @UseGuards(JwtAuthGuard)
   async update(
@@ -80,6 +92,10 @@ export class AdminController {
     status: 200,
     description: 'Admin has been successfully deleted',
     type: String,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
   })
   @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string, @Req() req: any) {

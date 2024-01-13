@@ -63,8 +63,8 @@ export class ProductController {
     description: 'Bad Request',
   })
   @UseGuards(JwtAuthGuard)
-  async findAll(): Promise<Product[]> {
-    return await this.productService.findAll();
+  async findAll(@Req() req: any): Promise<Product[]> {
+    return await this.productService.findAll(req?.user);
   }
 
   @Get(':id')

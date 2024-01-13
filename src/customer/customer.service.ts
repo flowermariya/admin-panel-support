@@ -12,18 +12,26 @@ export class CustomerService {
     private readonly customerRepository: Repository<Customer>,
   ) {}
 
-  async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+  async create(
+    createCustomerDto: CreateCustomerDto,
+    user: any,
+  ): Promise<Customer> {
     try {
-      const newCustomer = this.customerRepository.create(createCustomerDto);
+      const newCustomer = this.customerRepository.create({
+        ...createCustomerDto,
+        createdBy: user?.id,
+      });
       return await this.customerRepository.save(newCustomer);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
-  async findAll(): Promise<Customer[]> {
+  async findAll(user: any): Promise<Customer[]> {
     try {
-      return await this.customerRepository.find();
+      return await this.customerRepository.find({
+        where: { createdBy: user?.id },
+      });
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
@@ -44,11 +52,13 @@ export class CustomerService {
   async update(
     id: string,
     updateCustomerDto: UpdateCustomerDto,
+    user: any,
   ): Promise<Customer> {
     try {
       const customer = await this.customerRepository.preload({
         id,
         ...updateCustomerDto,
+        updatedBy: user?.id,
       });
 
       if (!customer) {

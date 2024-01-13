@@ -22,4 +22,7 @@ export abstract class BaseEntityModel extends BaseEntity {
 
   @Column({ nullable: true })
   createdBy: string;
+
+  @Column({ nullable: true })
+  updatedBy: string;
 }
