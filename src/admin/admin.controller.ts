@@ -76,12 +76,10 @@ export class AdminController {
   @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
-    @Req() req: Request,
+    @Req() req: any,
     @Body() updateAdminDto: UpdateAdminDto,
   ) {
-    // const user = req.user;
-
-    return await this.adminService.update(id, updateAdminDto);
+    return await this.adminService.update(id, updateAdminDto, req?.user);
   }
 
   @Delete(':id')
