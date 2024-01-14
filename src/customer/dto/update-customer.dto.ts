@@ -19,10 +19,9 @@ export class UpdateCustomerDto {
   @MinLength(3)
   customerName: string;
 
-  @ApiPropertyOptional({ maxLength: 15, default: 123 })
+  @ApiPropertyOptional()
   @IsOptional()
-  @IsNumber()
-  phoneNumber?: number;
+  phoneNumber?: string;
 
   @ApiPropertyOptional({ default: '' })
   @IsOptional()

@@ -19,10 +19,9 @@ export class CreateCustomerDto {
   @MinLength(3)
   customerName: string;
 
-  @ApiProperty({ maxLength: 15, default: 123 })
+  @ApiProperty({ default: '' })
   @IsNotEmpty()
-  @IsNumber()
-  phoneNumber?: number;
+  phoneNumber?: string;
 
   @ApiPropertyOptional({ default: '' })
   @IsOptional()
@@ -46,5 +45,5 @@ export class CreateCustomerDto {
   @ApiProperty({ default: false })
   @IsNotEmpty()
   @IsBoolean()
-  isIGST: boolean;
+  isGST: boolean;
 }

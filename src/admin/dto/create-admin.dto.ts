@@ -35,12 +35,9 @@ export class CreateAdminDto {
 
   @ApiProperty({
     description: 'The phone number of the admin.',
-    maxLength: 15,
-    default: 123,
   })
   @IsNotEmpty()
-  @IsNumber()
-  phone: number;
+  phone: string;
 
   @ApiProperty({
     description: 'The email address of the admin.',

@@ -27,7 +27,7 @@ export class Admin extends BaseEntityModel {
   gender: Gender;
 
   @Column()
-  phone: number;
+  phone: string;
 
   @Column({ unique: true })
   email: string;

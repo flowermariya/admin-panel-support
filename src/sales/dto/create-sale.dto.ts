@@ -56,6 +56,11 @@ export class CreateSaleDto {
   @IsUUID()
   staffId: string;
 
+  @ApiProperty({ description: 'Staff ID', default: '' })
+  @IsString()
+  @IsUUID()
+  productId: string;
+
   @ApiPropertyOptional({
     description: 'Additional note',
     required: false,
@@ -83,17 +88,23 @@ export class CreateSaleDto {
   @IsString()
   deliveryCharge?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Payment mode',
     enum: TransactionMode,
     default: TransactionMode.CASH,
   })
+  @IsOptional()
   @IsEnum(TransactionMode)
   paymentMode: TransactionMode;
 
-  @ApiProperty({ description: 'Outstanding amount', type: Number, default: 0 })
+  @ApiPropertyOptional({
+    description: 'Outstanding amount',
+    type: Number,
+    default: 0,
+  })
   @IsNumber()
   @Min(0)
+  @IsOptional()
   outStanding: number;
 
   @ApiProperty({
@@ -105,8 +116,9 @@ export class CreateSaleDto {
   @Min(0)
   totalTaxableAmount: number;
 
-  @ApiProperty({ description: 'GST amount', type: Number, default: 0 })
+  @ApiPropertyOptional({ description: 'GST amount', type: Number, default: 0 })
   @IsNumber()
+  @IsOptional()
   @Min(0)
   gstAmount: number;
 

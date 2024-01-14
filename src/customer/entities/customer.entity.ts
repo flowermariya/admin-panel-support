@@ -12,7 +12,7 @@ export class Customer extends BaseEntityModel {
   customerName: string;
 
   @Column({ nullable: true })
-  phoneNumber: number;
+  phoneNumber: string;
 
   @Column({ type: 'text', nullable: true })
   address: string;
@@ -31,7 +31,7 @@ export class Customer extends BaseEntityModel {
   transactionMode: TransactionMode;
 
   @Column({ type: 'boolean', default: false })
-  isIGST: boolean;
+  isGST: boolean;
 
   @OneToMany(() => Sale, (sale) => sale.customer)
   sales: Sale[];
