@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { Customer } from './entities/customer.entity'; // Ensure you have a Customer entity defined
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { PaginationDto } from 'src/product/dto/pagination.dto';
+import { Filter } from 'src/enums/filter';
 
 @Injectable()
 export class CustomerService {
@@ -27,10 +29,19 @@ export class CustomerService {
     }
   }
 
-  async findAll(user: any): Promise<Customer[]> {
+  async findAll(user: any, params: PaginationDto): Promise<Customer[]> {
     try {
+      const { limit = 5, skip = 0, belongsTo = Filter.ALL } = params;
+
+      const query = belongsTo == Filter.OWNER ? { createdBy: user?.id } : {};
+
       return await this.customerRepository.find({
-        where: { createdBy: user?.id },
+        where: query,
+        order: {
+          createdAt: 'DESC',
+        },
+        skip,
+        take: limit,
       });
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);

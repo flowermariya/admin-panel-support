@@ -9,6 +9,8 @@ import { Repository, Like } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { PaginationDto } from './dto/pagination.dto';
+import { Filter } from 'src/enums/filter';
 
 @Injectable()
 export class ProductService {
@@ -34,9 +36,20 @@ export class ProductService {
     }
   }
 
-  async findAll(user: any): Promise<Product[]> {
+  async findAll(user: any, params: PaginationDto): Promise<Product[]> {
     try {
-      return this.productRepository.find({ where: { createdBy: user?.id } });
+      const { limit = 5, skip = 0, belongsTo = Filter.ALL } = params;
+
+      const query = belongsTo == Filter.OWNER ? { createdBy: user?.id } : {};
+
+      return await this.productRepository.find({
+        where: query,
+        order: {
+          createdAt: 'DESC',
+        },
+        skip,
+        take: limit,
+      });
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
