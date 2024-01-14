@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -25,6 +26,7 @@ import {
 } from '@nestjs/swagger';
 import { Customer } from './entities/customer.entity';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { PaginationDto } from 'src/product/dto/pagination.dto';
 
 @ApiTags('Customer')
 @ApiBearerAuth('JWT-auth')
@@ -62,8 +64,9 @@ export class CustomerController {
     status: 400,
     description: 'Bad Request',
   })
-  async findAll(@Req() req: any) {
-    return await this.customerService.findAll(req?.user);
+  @UseGuards(JwtAuthGuard)
+  async findAll(@Req() req: any, @Query() params?: PaginationDto) {
+    return await this.customerService.findAll(req?.user, params);
   }
 
   @Get(':id')
@@ -79,6 +82,7 @@ export class CustomerController {
   })
   @ApiNotFoundResponse({ description: 'Customer not found' })
   @ApiParam({ name: 'id', description: 'The customer ID' })
+  @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string) {
     return await this.customerService.findOne(id);
   }
@@ -96,6 +100,7 @@ export class CustomerController {
   @ApiNotFoundResponse({ description: 'Customer not found' })
   @ApiParam({ name: 'id', description: 'The customer ID' })
   @ApiBody({ type: UpdateCustomerDto })
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
@@ -113,6 +118,7 @@ export class CustomerController {
     status: 400,
     description: 'Bad Request',
   })
+  @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string, @Req() req: any) {
     return await this.customerService.remove(id);
   }

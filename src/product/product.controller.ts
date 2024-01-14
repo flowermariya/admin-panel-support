@@ -24,6 +24,7 @@ import {
 } from '@nestjs/swagger';
 import { Product } from './entities/product.entity';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { PaginationDto } from './dto/pagination.dto';
 
 @ApiTags('Product')
 @Controller('product')
@@ -63,8 +64,12 @@ export class ProductController {
     description: 'Bad Request',
   })
   @UseGuards(JwtAuthGuard)
-  async findAll(@Req() req: any): Promise<Product[]> {
-    return await this.productService.findAll(req?.user);
+  async findAll(
+    @Req() req: any,
+    @Query() params?: PaginationDto,
+  ): Promise<Product[]> {
+    console.log(params);
+    return await this.productService.findAll(req?.user, params);
   }
 
   @Get(':id')
