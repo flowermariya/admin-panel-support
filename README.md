@@ -23,8 +23,8 @@ Customer Management: Functionality to create customer profiles and list customer
 = npm or yarn
 
 ## Installation
-- git clone [repository URL]
-- cd [project_name]
+- git clone https://github.com/flowermariya/admin-panel-support
+- cd admin-panel-support
 - npm install
 
 - # env files
