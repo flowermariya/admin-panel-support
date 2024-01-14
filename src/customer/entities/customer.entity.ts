@@ -31,7 +31,7 @@ export class Customer extends BaseEntityModel {
   transactionMode: TransactionMode;
 
   @Column({ type: 'boolean', default: false })
-  isIGST: boolean;
+  isGST: boolean;
 
   @OneToMany(() => Sale, (sale) => sale.customer)
   sales: Sale[];

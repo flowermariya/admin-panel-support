@@ -109,6 +109,29 @@ export class CustomerController {
     return await this.customerService.update(id, updateCustomerDto, req?.user);
   }
 
+  @Get('search/:customerName')
+  @ApiParam({
+    name: 'customerName',
+    required: true,
+    description: 'The name of the item to search for',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
+  @ApiOperation({ summary: 'Search for customers by name' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of customers matching the name',
+    type: [Customer],
+  })
+  @UseGuards(JwtAuthGuard)
+  async search(
+    @Param('customerName') customerName: string,
+  ): Promise<Customer[]> {
+    return await this.customerService.search(customerName);
+  }
+
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a customer' })
   @ApiOkResponse({ description: 'The customer has been successfully deleted' })

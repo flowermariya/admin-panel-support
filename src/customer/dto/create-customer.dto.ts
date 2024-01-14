@@ -46,5 +46,5 @@ export class CreateCustomerDto {
   @ApiProperty({ default: false })
   @IsNotEmpty()
   @IsBoolean()
-  isIGST: boolean;
+  isGST: boolean;
 }

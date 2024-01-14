@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Customer } from './entities/customer.entity'; // Ensure you have a Customer entity defined
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
@@ -78,6 +78,16 @@ export class CustomerService {
       }
 
       return this.customerRepository.save(customer);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async search(customerName: string): Promise<Customer[]> {
+    try {
+      return await this.customerRepository.find({
+        where: { customerName: Like(`%${customerName}%`) },
+      });
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
