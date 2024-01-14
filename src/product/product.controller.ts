@@ -21,6 +21,7 @@ import {
   ApiParam,
   ApiQuery,
   ApiBearerAuth,
+  ApiCreatedResponse,
 } from '@nestjs/swagger';
 import { Product } from './entities/product.entity';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
@@ -34,10 +35,9 @@ export class ProductController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new product' })
-  @ApiResponse({
-    status: 201,
-    description: 'The product has been successfully created.',
-    type: Product,
+  @ApiCreatedResponse({
+    description: 'The sale has been successfully created.',
+    type: CreateProductDto,
   })
   @ApiResponse({
     status: 400,

@@ -1,6 +1,7 @@
 import { TransactionMode } from 'src/enums/transaction.mode';
+import { Sale } from 'src/sales/entities/sale.entity';
 import { BaseEntityModel } from 'src/utils/base.schema';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Customer extends BaseEntityModel {
@@ -31,4 +32,7 @@ export class Customer extends BaseEntityModel {
 
   @Column({ type: 'boolean', default: false })
   isIGST: boolean;
+
+  @OneToMany(() => Sale, (sale) => sale.customer)
+  sales: Sale[];
 }
