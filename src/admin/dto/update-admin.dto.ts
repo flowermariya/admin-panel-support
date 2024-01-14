@@ -42,7 +42,7 @@ export class UpdateAdminDto {
   })
   @IsOptional()
   @IsNumber()
-  phone: number;
+  phone: string;
 
   @ApiPropertyOptional({
     description: 'The role of the admin.',

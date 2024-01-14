@@ -14,6 +14,7 @@ import { AdminService } from 'src/admin/admin.service';
 import { CustomerService } from 'src/customer/customer.service';
 import { PaginationDto } from 'src/product/dto/pagination.dto';
 import { Filter } from 'src/enums/filter';
+import { ProductService } from 'src/product/product.service';
 
 @Injectable()
 export class SalesService {
@@ -22,6 +23,7 @@ export class SalesService {
     private salesRepository: Repository<Sale>,
     private adminService: AdminService,
     private customerService: CustomerService,
+    private productService: ProductService,
   ) {}
 
   async create(createSaleDto: CreateSaleDto, user: any): Promise<Sale> {
@@ -30,6 +32,9 @@ export class SalesService {
       const customer = await this.customerService.create(
         createSaleDto.customer,
         user,
+      );
+      const product = await this.productService.findOne(
+        createSaleDto?.productId,
       );
 
       if (!admin) {
@@ -47,6 +52,7 @@ export class SalesService {
       const newSale = this.salesRepository.create(createSaleDto);
       newSale.customer = customer;
       newSale.staff = admin;
+      newSale.product = product;
       return await this.salesRepository.save(newSale);
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
@@ -61,12 +67,13 @@ export class SalesService {
 
   async findAll(user: any, params: PaginationDto): Promise<Sale[]> {
     try {
-      const { limit = 5, skip = 0, belongsTo = Filter.ALL } = params;
+      const { limit = 15, skip = 0, belongsTo = Filter.ALL } = params;
 
       const query = belongsTo == Filter.OWNER ? { createdBy: user?.id } : {};
 
       return await this.salesRepository.find({
         where: query,
+        relations: ['customer', 'staff', 'product'],
         order: {
           createdAt: 'DESC',
         },

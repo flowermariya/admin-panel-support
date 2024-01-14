@@ -12,7 +12,7 @@ export class Customer extends BaseEntityModel {
   customerName: string;
 
   @Column({ nullable: true })
-  phoneNumber: number;
+  phoneNumber: string;
 
   @Column({ type: 'text', nullable: true })
   address: string;

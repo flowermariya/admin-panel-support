@@ -31,7 +31,7 @@ export class CustomerService {
 
   async findAll(user: any, params: PaginationDto): Promise<Customer[]> {
     try {
-      const { limit = 5, skip = 0, belongsTo = Filter.ALL } = params;
+      const { limit = 15, skip = 0, belongsTo = Filter.ALL } = params;
 
       const query = belongsTo == Filter.OWNER ? { createdBy: user?.id } : {};
 

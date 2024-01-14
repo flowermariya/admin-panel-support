@@ -34,12 +34,12 @@ export class Sale extends BaseEntityModel {
   @JoinColumn({ name: 'customerId' })
   customer: Customer;
 
-  //   @OneToMany(() => Product)
-  //   @JoinColumn()
-  //   products: Product[];
+  @ManyToOne(() => Product)
+  @JoinColumn()
+  product: Product;
 
-  @ManyToOne(() => Admin, (admin) => admin.sales) // Assuming Admin has a 'sales' collection
-  @JoinColumn({ name: 'staffId' }) // This will create a 'staffId' column in 'Sale' table
+  @ManyToOne(() => Admin, (admin) => admin.sales)
+  @JoinColumn({ name: 'staffId' })
   staff: Admin;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
@@ -58,19 +58,49 @@ export class Sale extends BaseEntityModel {
   })
   paymentMode: TransactionMode;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  @Column({
+    type: 'decimal',
+    nullable: true,
+    precision: 10,
+    scale: 2,
+    default: 0,
+  })
   outStanding: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  @Column({
+    type: 'decimal',
+    nullable: true,
+    precision: 10,
+    scale: 2,
+    default: 0,
+  })
   totalTaxableAmount: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  @Column({
+    type: 'decimal',
+    nullable: true,
+    precision: 10,
+    scale: 2,
+    default: 0,
+  })
   gstAmount: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  @Column({
+    type: 'decimal',
+    nullable: true,
+    precision: 10,
+    scale: 2,
+    default: 0,
+  })
   discount: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  @Column({
+    type: 'decimal',
+    nullable: true,
+    precision: 10,
+    scale: 2,
+    default: 0,
+  })
   roundOff: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })

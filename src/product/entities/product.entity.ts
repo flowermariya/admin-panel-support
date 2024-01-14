@@ -1,5 +1,6 @@
+import { Sale } from 'src/sales/entities/sale.entity';
 import { BaseEntityModel } from 'src/utils/base.schema';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Product extends BaseEntityModel {
@@ -41,4 +42,7 @@ export class Product extends BaseEntityModel {
 
   @Column({ type: 'varchar', length: 255 })
   staff: string;
+
+  @OneToMany(() => Sale, (sale) => sale.product)
+  sales: Sale[];
 }
