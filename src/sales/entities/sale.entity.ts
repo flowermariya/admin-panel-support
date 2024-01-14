@@ -11,11 +11,12 @@ import { Admin } from 'src/admin/entities/admin.entity';
 import { TransactionMode } from 'src/enums/transaction.mode';
 import { Customer } from 'src/customer/entities/customer.entity';
 import { Product } from 'src/product/entities/product.entity';
+import { BaseEntityModel } from 'src/utils/base.schema';
 
 @Entity()
-export class Sale {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class Sale extends BaseEntityModel {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 50, unique: true })
   billNo: string;
@@ -23,22 +24,22 @@ export class Sale {
   @CreateDateColumn()
   billDate: Date;
 
-  @CreateDateColumn()
-  eWayBillNumber: Date;
+  @Column()
+  eWayBillNumber: string;
 
   @CreateDateColumn()
   deliveryDate: Date;
 
-  @ManyToOne(() => Customer)
-  @JoinColumn()
+  @ManyToOne(() => Customer, (customer) => customer.sales)
+  @JoinColumn({ name: 'customerId' })
   customer: Customer;
 
   //   @OneToMany(() => Product)
   //   @JoinColumn()
   //   products: Product[];
 
-  @ManyToOne(() => Admin)
-  @JoinColumn()
+  @ManyToOne(() => Admin, (admin) => admin.sales) // Assuming Admin has a 'sales' collection
+  @JoinColumn({ name: 'staffId' }) // This will create a 'staffId' column in 'Sale' table
   staff: Admin;
 
   @Column({ type: 'varchar', length: 255, nullable: true })

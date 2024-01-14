@@ -7,7 +7,9 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
+import { Sale } from 'src/sales/entities/sale.entity';
 
 @Entity()
 export class Admin extends BaseEntityModel {
@@ -32,4 +34,7 @@ export class Admin extends BaseEntityModel {
 
   @Column({ nullable: true })
   role: string;
+
+  @OneToMany(() => Sale, (sale) => sale.staff)
+  sales: Sale[];
 }

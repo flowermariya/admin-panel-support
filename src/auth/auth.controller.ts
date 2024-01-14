@@ -2,7 +2,13 @@ import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/create-auth.dto';
 import { Auth } from './entities/auth.entity';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Admin } from 'src/admin/entities/admin.entity';
 import { CreateAdminDto } from 'src/admin/dto/create-admin.dto';
 import { AdminService } from 'src/admin/admin.service';
@@ -26,10 +32,9 @@ export class AuthController {
 
   @Post('create')
   @ApiOperation({ summary: 'Create admin user' })
-  @ApiResponse({
-    status: 201,
-    description: 'The admin has been successfully created.',
-    type: Admin,
+  @ApiCreatedResponse({
+    description: 'The sale has been successfully created.',
+    type: CreateAdminDto,
   })
   @ApiResponse({
     status: 400,
