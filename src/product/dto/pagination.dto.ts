@@ -7,7 +7,7 @@ export class PaginationDto {
   @IsOptional()
   skip?: number;
 
-  @ApiPropertyOptional({ default: 5, nullable: true })
+  @ApiPropertyOptional({ default: 15, nullable: true })
   @IsOptional()
   limit?: number;
 

@@ -23,6 +23,12 @@ export class CreateProductDto {
   @Length(0, 255)
   itemName: string;
 
+  @ApiProperty({ default: '' })
+  @IsNotEmpty()
+  @IsString()
+  @Length(0, 1000)
+  itemImage: string;
+
   @ApiPropertyOptional({ default: '' })
   @IsOptional()
   @IsString()
@@ -61,8 +67,8 @@ export class CreateProductDto {
   @Min(0)
   gstAmount?: number;
 
-  @ApiProperty({ default: 0 })
-  @IsNotEmpty()
+  @ApiPropertyOptional({ default: 0 })
+  @IsOptional()
   @Min(0)
   total: number;
 

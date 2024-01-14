@@ -12,6 +12,9 @@ export class Product extends BaseEntityModel {
   @Column({ type: 'varchar', length: 255 })
   itemName: string;
 
+  @Column({ type: 'varchar', length: 255 })
+  itemImage: string;
+
   @Column({ type: 'varchar', length: 255, nullable: true })
   batchCode: string;
 
@@ -33,7 +36,7 @@ export class Product extends BaseEntityModel {
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   gstAmount: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   total: number;
 
   @Column({ type: 'varchar', length: 255 })
