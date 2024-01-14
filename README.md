@@ -8,7 +8,7 @@ Sales Management: Interface to create, view, and manage sales records.
 Product Management: Tools for adding new products, listing all products, and editing product details.
 Customer Management: Functionality to create customer profiles and list customer information for easy access and management.
 
-### Technologies Used
+## Technologies Used
 - Backend: Node.js with NestJS framework.
 - Language: TypeScript.
 - Database: MySQL.
@@ -27,14 +27,15 @@ Customer Management: Functionality to create customer profiles and list customer
 - cd admin-panel-support
 - npm install
 
-- # env files
-DATABASE_HOST=
-DATABASE_USER=
-DATABASE_PASSWORD=
-DATABASE_NAME=
-PORT=
+# env files
+- DATABASE_HOST=
+- DATABASE_USER=
+- DATABASE_PASSWORD=
+- DATABASE_NAME=
+- PORT=
 
-- npm run start
+
+# npm run start
 
 - This command will start the NestJS server. By default, the server will run on `http://localhost:3000`.
 
