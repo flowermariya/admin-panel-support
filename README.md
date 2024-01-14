@@ -1,73 +1,55 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+### ADMIN PANEL SYSTEM
+## Project Overview
+This project is an Admin Panel System designed to facilitate the management of sales, products, and customer data. The backend is built with Node.js and NestJS, leveraging TypeScript for strong typing and reliable code maintenance. The system uses MySQL for data persistence, with TypeORM serving as the ORM layer to interact with the database seamlessly.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Features
+Authentication: Secure login and signup processes to manage user access.
+Sales Management: Interface to create, view, and manage sales records.
+Product Management: Tools for adding new products, listing all products, and editing product details.
+Customer Management: Functionality to create customer profiles and list customer information for easy access and management.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Technologies Used
+- Backend: Node.js with NestJS framework.
+- Language: TypeScript.
+- Database: MySQL.
+- ORM: TypeORM.
 
-## Description
+## Getting Started
+- These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Prerequisites
+- Node.js
+- MySQL Server
+= npm or yarn
 
 ## Installation
+- git clone [repository URL]
+- cd [project_name]
+- npm install
 
-```bash
-$ npm install
-```
+- # env files
+DATABASE_HOST=
+DATABASE_USER=
+DATABASE_PASSWORD=
+DATABASE_NAME=
+PORT=
 
-## Running the app
+- npm run start
 
-```bash
-# development
-$ npm run start
+- This command will start the NestJS server. By default, the server will run on `http://localhost:3000`.
 
-# watch mode
-$ npm run start:dev
+## Usage
+Once the server is up and running, you can begin using the Admin Panel System to perform various tasks:
 
-# production mode
-$ npm run start:prod
-```
+- Detailed Documentation http://localhost:3000/api#/Login 
 
-## Test
+- **To log in**: Send a POST request to `/auth/login` with the user credentials.
+- **To sign up**: Send a POST request to `/auth/create` with the required user information.
+- **To create sales**: Send a POST request to `/sales` with the sale data.
+- **To list sales**: Send a GET request to `/sales`.
+- **To create a product**: Send a POST request to `/products` with product details.
+- **To list products**: Send a GET request to `/products`.
+- **To add a customer**: Send a POST request to `/customers` with customer information.
+- **To list customers**: Send a GET request to `/customers`.
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- You can use tools like Postman or any HTTP client in a browser to interact with the API.
