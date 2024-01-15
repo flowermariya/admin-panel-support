@@ -30,6 +30,8 @@ Customer Management: Functionality to create customer profiles and list customer
 
 ## Installation
 
+# npm run start
+=======
   1. Git clone
        ```sh
        - git clone https://github.com/flowermariya/admin-panel-support
