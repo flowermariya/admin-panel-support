@@ -30,19 +30,24 @@ Customer Management: Functionality to create customer profiles and list customer
 
 ## Installation
 
-- git clone https://github.com/flowermariya/admin-panel-support
-- cd admin-panel-support
-- npm install
-
-# env files
-
-- DATABASE_HOST=
-- DATABASE_USER=
-- DATABASE_PASSWORD=
-- DATABASE_NAME=
-- PORT=
-
-# npm run start
+  1. Git clone
+       ```sh
+       - git clone https://github.com/flowermariya/admin-panel-support
+       - cd admin-panel-support
+  2. Install dependencies
+      ```sh
+     - npm install
+  3. Add env variables
+     ```sh
+     - DATABASE_HOST=
+     - DATABASE_USER=
+     - DATABASE_PASSWORD=
+     - DATABASE_NAME=
+     - PORT=
+  4. Start Project
+      ```sh
+      - npm run start:dev - Development
+      - npm run start
 
 - This command will start the NestJS server. By default, the server will run on `http://localhost:3000`.
 
