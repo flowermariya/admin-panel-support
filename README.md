@@ -37,10 +37,11 @@ Customer Management: Functionality to create customer profiles and list customer
 # env files
 
 - DATABASE_HOST=
-- DATABASE_USER=
-- DATABASE_PASSWORD=
-- DATABASE_NAME=
-- PORT=
+- DB_PORT=
+- DB_USERNAME=
+- DB_PASSWORD=
+- DB_DATABASE=
+- DB_SYNC=
 
 # npm run start
 
