@@ -26,11 +26,12 @@ export class Customer extends BaseEntityModel {
   @Column({
     type: 'enum',
     enum: TransactionMode,
+    nullable: true,
     default: TransactionMode.CASH,
   })
   transactionMode: TransactionMode;
 
-  @Column({ type: 'boolean', default: false })
+  @Column({ type: 'boolean', default: false, nullable: true })
   isGST: boolean;
 
   @OneToMany(() => Sale, (sale) => sale.customer)
