@@ -21,7 +21,7 @@ require('dotenv').config();
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       ssl: {
-        ca: fs.readFileSync(process.env.SSL_CA_PATH),
+        ca: fs.readFileSync(path.join(__dirname, '..', 'certs', 'ca.pem')),
       },
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.DB_SYNC === 'true',
