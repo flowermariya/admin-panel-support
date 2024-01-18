@@ -23,27 +23,31 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   phoneNumber?: string;
 
-  @ApiPropertyOptional({ default: '' })
+  @ApiPropertyOptional({ default: '', nullable: true })
   @IsOptional()
   @MinLength(10)
   @MaxLength(100)
   @IsString()
   address?: string;
 
-  @ApiProperty({ default: '' })
-  @IsNotEmpty()
+  @ApiPropertyOptional({ default: '', nullable: true })
+  @IsOptional()
   @MinLength(10)
   @MaxLength(100)
   @IsString()
   deliveryAddress?: string;
 
-  @ApiProperty({ default: TransactionMode.CASH, enum: TransactionMode })
-  @IsNotEmpty()
+  @ApiPropertyOptional({
+    default: TransactionMode.CASH,
+    enum: TransactionMode,
+    nullable: true,
+  })
+  @IsOptional()
   @IsEnum(TransactionMode)
   Mode: TransactionMode;
 
-  @ApiProperty({ default: false })
-  @IsNotEmpty()
+  @ApiPropertyOptional({ default: false, nullable: true })
+  @IsOptional()
   @IsBoolean()
   isGST: boolean;
 }

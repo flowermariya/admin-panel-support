@@ -72,7 +72,7 @@ export class CreateSaleDto {
 
   @ApiPropertyOptional({
     description: 'Vehicle number',
-    required: false,
+    nullable: true,
     default: '',
   })
   @IsOptional()
@@ -81,7 +81,7 @@ export class CreateSaleDto {
 
   @ApiPropertyOptional({
     description: 'Delivery charge',
-    required: false,
+    nullable: true,
     default: '',
   })
   @IsOptional()
